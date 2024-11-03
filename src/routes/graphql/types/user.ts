@@ -6,7 +6,7 @@ import {
 } from "graphql";
 import { UUIDType } from "./uuid.js";
 
-export const userType = new GraphQLObjectType({
+export const UserType = new GraphQLObjectType({
   name: "User",
   fields: () => ({
     id: { type: new GraphQLNonNull(UUIDType) },
