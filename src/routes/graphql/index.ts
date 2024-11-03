@@ -22,6 +22,7 @@ const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
         schema,
         source: req.body.query,
         rootValue,
+        variableValues: req.body.variables,
       }).then((response) => {
         console.log(`response = ${JSON.stringify(response)}`);
         return response;
