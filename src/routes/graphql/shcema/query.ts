@@ -3,12 +3,13 @@ import { UserType } from "../types/user.js";
 import { UUIDType } from "../types/uuid.js";
 import { PostType } from "../types/post.js";
 import { MemberType, MemberTypeEnum } from "../types/member.js";
+import { ProfileType } from "../types/profile.js";
 
 export const query = new GraphQLObjectType({
   name: "Query",
   fields: {
     memberTypes: {
-      type: new GraphQLList(MemberType),
+      type: new GraphQLNonNull(new GraphQLList(MemberType)),
     },
     memberType: {
       type: MemberType,
@@ -24,7 +25,7 @@ export const query = new GraphQLObjectType({
       },
     },
     users: {
-      type: new GraphQLList(UserType),
+      type: new GraphQLNonNull(new GraphQLList(UserType)),
     },
     post: {
       type: PostType,
@@ -33,7 +34,16 @@ export const query = new GraphQLObjectType({
       },
     },
     posts: {
-      type: new GraphQLList(PostType),
+      type: new GraphQLNonNull(new GraphQLList(PostType)),
+    },
+    profile: {
+      type: new GraphQLNonNull(ProfileType),
+      args: {
+        id: { type: new GraphQLNonNull(UUIDType) },
+      },
+    },
+    profiles: {
+      type: new GraphQLNonNull(new GraphQLList(ProfileType)),
     },
   },
 });
