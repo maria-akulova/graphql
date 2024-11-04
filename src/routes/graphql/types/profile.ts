@@ -7,6 +7,7 @@ import {
 } from "graphql";
 import { MemberType } from "./member.js";
 import { UUIDType } from "./uuid.js";
+import { UserType } from "./user.js";
 
 export const ProfileType = new GraphQLObjectType({
   name: "Profile",
@@ -14,7 +15,9 @@ export const ProfileType = new GraphQLObjectType({
     id: { type: new GraphQLNonNull(UUIDType) },
     isMale: { type: new GraphQLNonNull(GraphQLBoolean) },
     yearOfBirth: { type: new GraphQLNonNull(GraphQLInt) },
+    user: { type: UserType },
+    userId: { type: new GraphQLNonNull(UUIDType) },
     memberType: { type: MemberType },
-    memberTypeId: { type: new GraphQLNonNull(GraphQLString) },
+    memberTypeId: { type: GraphQLString },
   }),
 });

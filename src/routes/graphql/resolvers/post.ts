@@ -12,3 +12,13 @@ export const PostResolver = {
     return await prisma.post.findMany();
   },
 };
+
+export const getPosts = {
+  byUserId: async (authorId: UUID) => {
+    return await prisma.post.findMany({
+      where: {
+        authorId,
+      },
+    });
+  },
+};
