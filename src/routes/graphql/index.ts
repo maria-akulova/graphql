@@ -1,13 +1,18 @@
-import { FastifyPluginAsyncTypebox } from '@fastify/type-provider-typebox';
-import { createGqlResponseSchema, gqlResponseSchema } from './schemas.js';
-import { graphql } from 'graphql';
+import { FastifyPluginAsyncTypebox } from "@fastify/type-provider-typebox";
+import {
+  createGqlResponseSchema,
+  gqlResponseSchema,
+  schema,
+} from "./schemas.js";
+import { graphql, parse, validate } from "graphql";
+import { rootValue } from "./resolvers/main.js";
+import depthLimit from "graphql-depth-limit";
+import { createDataLoaders } from "./dataLoader/dataLoader.js";
 
 const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
-  const { prisma } = fastify;
-
   fastify.route({
-    url: '/',
-    method: 'POST',
+    url: "/",
+    method: "POST",
     schema: {
       ...createGqlResponseSchema,
       response: {
@@ -15,7 +20,24 @@ const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
       },
     },
     async handler(req) {
-      // return graphql();
+      const ast = parse(req.body.query);
+      const validationErrors = validate(schema, ast, [depthLimit(5)]);
+      if (validationErrors.length) {
+        return { errors: validationErrors };
+      }
+
+      return graphql({
+        schema,
+        source: req.body.query,
+        rootValue,
+        variableValues: req.body.variables,
+        contextValue: {
+          db: fastify.prisma,
+          ...createDataLoaders(fastify.prisma),
+        },
+      }).then((response) => {
+        return response;
+      });
     },
   });
 };
