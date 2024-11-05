@@ -2,8 +2,9 @@ import { GraphQLList, GraphQLNonNull, GraphQLObjectType } from "graphql";
 import { UserType } from "../types/user.js";
 import { UUIDType } from "../types/uuid.js";
 import { PostType } from "../types/post.js";
-import { MemberType, MemberTypeEnum } from "../types/member.js";
+import { MemberType } from "../types/member.js";
 import { ProfileType } from "../types/profile.js";
+import { MemberTypeEnum } from "../resolvers/member.js";
 
 export const query = new GraphQLObjectType({
   name: "Query",

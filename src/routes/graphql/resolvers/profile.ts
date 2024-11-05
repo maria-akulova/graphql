@@ -32,13 +32,3 @@ export const ProfileResolver = {
     return "";
   },
 };
-
-export const getProfile = {
-  byUserId: async (userId: UUID) => {
-    return await prisma.profile.findUnique({
-      where: {
-        userId,
-      },
-    });
-  },
-};

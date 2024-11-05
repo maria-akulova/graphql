@@ -5,7 +5,7 @@ import {
   GraphQLNonNull,
   GraphQLString,
 } from "graphql";
-import { MemberTypeEnum } from "../types/member.js";
+import { MemberTypeEnum } from "../resolvers/member.js";
 
 export interface IProfileDto {
   userId: string;
