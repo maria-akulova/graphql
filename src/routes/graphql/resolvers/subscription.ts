@@ -6,13 +6,13 @@ const prisma = new PrismaClient();
 export const SubscriptionResolver = {
   subscribeTo: async ({ id, authorId }: { id: UUID; authorId: UUID }) => {
     try {
-      const user = prisma.user.update({
-        where: { id },
-        data: { userSubscribedTo: { create: { authorId } } },
+      await prisma.subscribersOnAuthors.create({
+        data: { subscriberId: id, authorId: authorId },
       });
-      return user;
+
+      return "Subscribed successfully";
     } catch {
-      return null;
+      return "Could not subscribe";
     }
   },
   unsubscribeFrom: async ({
@@ -24,10 +24,17 @@ export const SubscriptionResolver = {
   }) => {
     try {
       await prisma.subscribersOnAuthors.delete({
-        where: { subscriberId_authorId: { subscriberId, authorId } },
+        where: {
+          subscriberId_authorId: {
+            subscriberId: subscriberId,
+            authorId: authorId,
+          },
+        },
       });
+
+      return "Unsubscribed successfully";
     } catch {
-      return null;
+      return "Could not unsubscribe";
     }
   },
 };
