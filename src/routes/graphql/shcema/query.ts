@@ -10,7 +10,7 @@ export const query = new GraphQLObjectType({
   name: "Query",
   fields: {
     memberTypes: {
-      type: new GraphQLNonNull(new GraphQLList(MemberType)),
+      type: new GraphQLList(MemberType),
     },
     memberType: {
       type: MemberType,
@@ -18,7 +18,6 @@ export const query = new GraphQLObjectType({
         id: { type: new GraphQLNonNull(MemberTypeEnum) },
       },
     },
-
     user: {
       type: UserType,
       args: {
@@ -26,7 +25,7 @@ export const query = new GraphQLObjectType({
       },
     },
     users: {
-      type: new GraphQLNonNull(new GraphQLList(UserType)),
+      type: new GraphQLList(UserType),
     },
     post: {
       type: PostType,
@@ -35,16 +34,16 @@ export const query = new GraphQLObjectType({
       },
     },
     posts: {
-      type: new GraphQLNonNull(new GraphQLList(PostType)),
+      type: new GraphQLList(PostType),
     },
     profile: {
-      type: new GraphQLNonNull(ProfileType),
+      type: ProfileType,
       args: {
         id: { type: new GraphQLNonNull(UUIDType) },
       },
     },
     profiles: {
-      type: new GraphQLNonNull(new GraphQLList(ProfileType)),
+      type: new GraphQLList(ProfileType),
     },
   },
 });

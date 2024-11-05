@@ -4,45 +4,30 @@ import { UUID } from "crypto";
 const prisma = new PrismaClient();
 
 export const SubscriptionResolver = {
-  subscribeTo: async (
-    p0: string,
-    p1: string,
-    {
-      userId,
-      authorId,
-    }: {
-      userId: UUID;
-      authorId: UUID;
+  subscribeTo: async ({ id, authorId }: { id: UUID; authorId: UUID }) => {
+    try {
+      const user = prisma.user.update({
+        where: { id },
+        data: { userSubscribedTo: { create: { authorId } } },
+      });
+      return user;
+    } catch {
+      return null;
     }
-  ) => {
-    return await prisma.user.update({
-      where: {
-        id: userId,
-      },
-      data: {
-        userSubscribedTo: {
-          create: {
-            authorId: authorId,
-          },
-        },
-      },
-    });
   },
   unsubscribeFrom: async ({
-    userId,
+    subscriberId,
     authorId,
   }: {
-    userId: UUID;
+    subscriberId: UUID;
     authorId: UUID;
   }) => {
-    await prisma.subscribersOnAuthors.delete({
-      where: {
-        subscriberId_authorId: {
-          subscriberId: userId,
-          authorId: authorId,
-        },
-      },
-    });
-    return "";
+    try {
+      await prisma.subscribersOnAuthors.delete({
+        where: { subscriberId_authorId: { subscriberId, authorId } },
+      });
+    } catch {
+      return null;
+    }
   },
 };

@@ -1,4 +1,4 @@
-import { GraphQLObjectType, GraphQLString } from "graphql";
+import { GraphQLNonNull, GraphQLObjectType, GraphQLString } from "graphql";
 import { UserType } from "../types/user.js";
 import { userChangeDto, userDto } from "../dto/user.js";
 import { ProfileType } from "../types/profile.js";
@@ -58,15 +58,15 @@ export const mutation = new GraphQLObjectType({
     subscribeTo: {
       type: UserType,
       args: {
-        userId: { type: UUIDType },
-        authorId: { type: UUIDType },
+        userId: { type: new GraphQLNonNull(UUIDType) },
+        authorId: { type: new GraphQLNonNull(UUIDType) },
       },
     },
     unsubscribeFrom: {
       type: GraphQLString,
       args: {
-        userId: { type: UUIDType },
-        authorId: { type: UUIDType },
+        userId: { type: new GraphQLNonNull(UUIDType) },
+        authorId: { type: new GraphQLNonNull(UUIDType) },
       },
     },
   }),

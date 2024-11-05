@@ -9,7 +9,7 @@ import { ProfileType } from "./profile.js";
 import { MemberTypeEnum } from "../resolvers/member.js";
 
 export const MemberType = new GraphQLObjectType({
-  name: "Member",
+  name: "MemberType",
   fields: () => ({
     id: { type: new GraphQLNonNull(MemberTypeEnum) },
     discount: { type: new GraphQLNonNull(GraphQLFloat) },
