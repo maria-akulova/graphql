@@ -1,6 +1,7 @@
 import { MemberResolver } from "./member.js";
 import { PostResolver } from "./post.js";
 import { ProfileResolver } from "./profile.js";
+import { SubscriptionResolver } from "./subscription.js";
 import { UserResolver } from "./users.js";
 
 export const rootValue = {
@@ -8,4 +9,5 @@ export const rootValue = {
   ...PostResolver,
   ...MemberResolver,
   ...ProfileResolver,
+  ...SubscriptionResolver,
 };

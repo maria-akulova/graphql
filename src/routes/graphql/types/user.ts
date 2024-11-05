@@ -13,7 +13,7 @@ import { User } from "@prisma/client";
 import { getProfile } from "../resolvers/profile.js";
 import { UUID } from "node:crypto";
 import { getPosts } from "../resolvers/post.js";
-import { SubsResolver } from "../resolvers/subscription.js";
+import { SubscriptionResolver } from "../resolvers/subscription.js";
 
 export const UserType = new GraphQLObjectType({
   name: "User",
@@ -36,13 +36,13 @@ export const UserType = new GraphQLObjectType({
     userSubscribedTo: {
       type: new GraphQLList(SubscriberType),
       async resolve(user: User) {
-        return await SubsResolver.subscribeFrom.load(user.id);
+        return user;
       },
     },
     subscribedToUser: {
       type: new GraphQLList(SubscriberType),
       async resolve(user: User) {
-        return await SubsResolver.subscribeTo(user.id as UUID);
+        return user;
       },
     },
   }),
